@@ -7,12 +7,11 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.StringCharacterIterator;
 
 public class MemoryCheck implements DedicatedServerModInitializer {
-    private @NotNull String humanReadableBytes(long bytes) {
+    private String humanReadableBytes(long bytes) {
         if (-1000 < bytes && bytes < 1000) {
             return bytes + " B";
         }
@@ -24,7 +23,7 @@ public class MemoryCheck implements DedicatedServerModInitializer {
         return String.format("%.1f %cB", bytes / 1000.0, ci.current());
     }
  
-    private void sendLabeledResponseBytesOutOfLimit(@NotNull ServerCommandSource cmdSource, String label, long bytes, long memoryLimit) {
+    private void sendLabeledResponseBytesOutOfLimit(ServerCommandSource cmdSource, String label, long bytes, long memoryLimit) {
         cmdSource.sendMessage(Text.literal(String.format("%s: %s (%.1f%%)", label, humanReadableBytes(bytes), (float) bytes / memoryLimit * 100)));
     }
 
